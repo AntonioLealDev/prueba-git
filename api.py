@@ -11,8 +11,8 @@ if​ __name__ == ​'__main__'​:
 
 @app.route(​"/dashboard"​)
 def​ dashboard():
-    ​return​ render_template(​'​ÑAÑAAÑÑAÑAÑAÑAÑÑA​.html'​)
+    ​return​ render_template(​'dashboard.html'​)
     
 @app.route(​"/map"​)
-def​ map():​
-    return​ render_template(​'map.html'​)
+def​ map():
+    ​return​ render_template(​'map.html'​)
