@@ -27,12 +27,12 @@ df_top10 = df_total.nlargest(​10​, ​"Confirmed"​) top10_countries_1 = df
 df_top10 = df_total.nlargest(​10​, ​"Recovered"​) top10_countries_2 = df_top10[​"Country_Region"​].tolist() top10_recovered = df_top10[​"Recovered"​].tolist()
 df_top10 = df_total.nlargest(​10​, ​"Deaths"​) top10_countries_3 = df_top10[​"Country_Region"​].tolist() top10_deaths = df_top10[​"Deaths"​].tolist()
 
-#Trozo de código 4
-fig = make_LO_QUE_TE_DE_LA_GANA( rows = ​4​, cols = ​6​,
+#Trozo de código 3
+fig = make_subplots( rows = ​4​, cols = ​6​,
 specs=[
-[{​"type"​: ​"scattergeo"​, ​"rowspan"​: ​4​, ​"colspan"​: ​3​},
-None​, ​None​, {​"type"​: ​"indicator"​}, {​"type"​: ​"indicator"​},
- {​"type"​: ​"indicator"​} ],
+ 
+ [{​"type"​: ​"scattergeo"​, ​"rowspan"​: ​4​, ​"colspan"​: ​3​}, None​, ​None​, {​"type"​: ​"indicator"​}, {​"type"​: ​"indicator"​},
+{​"type"​: ​"indicator"​} ],
 [ "colspan"​:​3​}, [ "colspan"​:​3​}, [ "colspan"​:​3​},
 ] )
 ​None​, ​None​, ​None​, ​None​, ​None​],
@@ -44,18 +44,22 @@ message = df_final[​"Country_Region"​] + ​" "​ + df_final[​"Province_S
 message += ​"Confirmed: "​ + df_final[​"Confirmed"​].astype(str) + "<br>"
 message += ​"Deaths: "​ + df_final[​"Deaths"​].astype(str) + ​"<br>" message += ​"Recovered: "​ + df_final[​"Recovered"​].astype(str) + "<br>"
 message += ​"Last updated: "​ + df_final[​"Last_Update"​].astype(str) df_final[​"text"​] = message
-   fig.add_trace(
+fig.add_trace(
     go.Scattergeo(
 locationmode = ​"country names"​, lon = df_final[​"Long_"​],
 lat = df_final[​"Lat"​], hovertext = df_final[​"text"​], showlegend=​False​,
 marker = dict( size = ​10​,
-opacity = ​0.8​, reversescale = ​True​, autocolorscale = ​True​, symbol = ​'square'​, line = dict(
+opacity = ​0.8​, reversescale = autocolorscale symbol = ​'square'​, line = dict(
 width=​1​,
 color=​'rgba(102, 102, 102)' ),
 cmin = ​0​,
-color = df_final[​'Confirmed'​],
-cmax = df_final[​'Confirmed'​].max(), colorbar_title=​"Confirmed Cases<br>Latest Update"​, colorbar_x = -​0.05
-) ),
+color = df_final[​'Confirmed'​], cmax = df_final[​'Confirmed'​].max(),
+​True​,
+= ​True​,
+ 
+ colorbar_title=​"Confirmed Cases<br>Latest Update"​,
+colorbar_x = -​0.05 )
+),
 row=​1​, col=​1 )
 fig.add_trace(
     go.Indicator(
@@ -65,8 +69,7 @@ row=​1​, col=​4 )
 fig.add_trace(
     go.Indicator(
 mode=​"number"​, value=total_recovered, title=​"Recovered Cases"​,
-
-  ),
+),
 row=​1​, col=​5 )
 fig.add_trace(
     go.Indicator(
@@ -77,7 +80,8 @@ fig.add_trace(
     go.Bar(
 x=top10_countries_1, y=top10_confirmed,
 name= ​"Confirmed Cases"​, marker=dict(color=​"Yellow"​), showlegend=​True​,
-),
+ 
+  ),
 row=​2​, col=​4 )
 fig.add_trace(
     go.Bar(
@@ -89,7 +93,6 @@ fig.add_trace(
 x=top10_countries_3, y=top10_deaths,
 name= ​"Deaths Cases"​, marker=dict(color=​"crimson"​), showlegend=​True​),
 row=​4​, col=​4 )
- 
 fig.update_layout(
 template=​"plotly_dark"​,
 title = ​"Global COVID-19 Cases (Last Updated: "​ +
@@ -97,12 +100,13 @@ str(df_final[​"Last_Update"​][​0​]) + ​")"​, showlegend=​True​, 
 geo = dict( projection_type=​"orthographic"​,
 ),
 showcoastlines=​True​, landcolor=​"white"​, showland= ​True​, showocean = ​True​, lakecolor=​"LightBlue"
-       annotations=[
-           dict(
+annotations=[
+    dict(
+
+ 
 text=​"Source: https://bit.ly/3aEzxjK"​, showarrow=​False​,
 xref=​"paper"​,
 yref=​"paper"​,
 x=​0.35​,
 y=​0​) ]
-)
-fig.write_html(​'templates/quedivertidoesesteejercicio.html')
+) fig.write_html(​'templates/dashboard.html'​)
